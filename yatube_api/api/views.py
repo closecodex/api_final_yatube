@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
 from api.serializers import (PostSerializer, GroupSerializer,
-                            CommentSerializer, FollowSerializer)
+                             CommentSerializer, FollowSerializer)
 from posts.models import Post, Group, Follow, Comment
 
 
