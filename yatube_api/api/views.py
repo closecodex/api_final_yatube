@@ -7,7 +7,8 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from api.serializers import PostSerializer, GroupSerializer, CommentSerializer, FollowSerializer
+from api.serializers import PostSerializer, GroupSerializer, 
+                            CommentSerializer, FollowSerializer
 from posts.models import Post, Group, Follow, Comment
 
 
@@ -31,7 +32,7 @@ class PostViewSet(viewsets.ModelViewSet):
         if post.author != request.user:
             return Response(status=HTTPStatus.FORBIDDEN)
         return super().destroy(request, *args, **kwargs)
-    
+
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             self.permission_classes = [permissions.AllowAny]
@@ -72,7 +73,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))
-    
+  
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             self.permission_classes = [permissions.AllowAny]
