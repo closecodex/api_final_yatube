@@ -6,9 +6,10 @@ from rest_framework import viewsets, permissions, filters, mixins
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from api.serializers import (PostSerializer, GroupSerializer, 
+from api.serializers import (PostSerializer, GroupSerializer,
                              CommentSerializer, FollowSerializer)
 from posts.models import Post, Group, Follow
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
