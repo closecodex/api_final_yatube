@@ -7,8 +7,8 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from api.serializers import PostSerializer, GroupSerializer,
-                            CommentSerializer, FollowSerializer
+from api.serializers import (PostSerializer, GroupSerializer,
+                            CommentSerializer, FollowSerializer)
 from posts.models import Post, Group, Follow, Comment
 
 
