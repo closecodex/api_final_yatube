@@ -6,6 +6,7 @@ from posts.models import Comment, Post, Group, Follow
 
 User = get_user_model()
 
+
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
@@ -45,5 +46,7 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if self.context['request'].user == data['following']:
-            raise serializers.ValidationError("Вы не можете подписаться на самого себя!")
+            raise serializers.ValidationError(
+                "Вы не можете подписаться на самого себя!"
+            )
         return data
