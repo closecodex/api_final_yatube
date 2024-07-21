@@ -7,7 +7,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 
-from api.serializers import PostSerializer, GroupSerializer, 
+from api.serializers import PostSerializer, GroupSerializer,
                             CommentSerializer, FollowSerializer
 from posts.models import Post, Group, Follow, Comment
 
@@ -100,4 +100,3 @@ class FollowViewSet(viewsets.ModelViewSet):
         if Follow.objects.filter(user=user, following=following).exists():
             raise ValidationError("Вы уже подписаны на этого пользователя.")
         serializer.save(user=user)
-
