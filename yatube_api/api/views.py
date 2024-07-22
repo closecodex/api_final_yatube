@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, filters, mixins
 from rest_framework.pagination import LimitOffsetPagination
 
-from api.serializers import (PostSerializer, GroupSerializer, 
+from api.serializers import (PostSerializer, GroupSerializer,
                              CommentSerializer, FollowSerializer)
 from posts.models import Post, Group, Follow
 
@@ -13,7 +13,9 @@ from api.permissions import IsAuthorOrReadOnly
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
+    permission_classes = (
+      permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly
+    )
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
@@ -28,7 +30,9 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
+    permission_classes = (
+      permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly
+    )
 
     def get_queryset(self):
         return self.get_post().comments.all()
