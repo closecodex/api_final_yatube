@@ -1,41 +1,23 @@
-from http import HTTPStatus
-
 from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets, permissions, filters, mixins
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.response import Response
 
-from api.serializers import (PostSerializer, GroupSerializer,
+from api.serializers import (PostSerializer, GroupSerializer, 
                              CommentSerializer, FollowSerializer)
 from posts.models import Post, Group, Follow
+
+from api.permissions import IsAuthorOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-
-    def update(self, request, *args, **kwargs):
-        post = self.get_object()
-        if post.author != request.user:
-            return Response(status=HTTPStatus.FORBIDDEN)
-        return super().update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        post = self.get_object()
-        if post.author != request.user:
-            return Response(status=HTTPStatus.FORBIDDEN)
-        return super().destroy(request, *args, **kwargs)
-
-    def get_permissions(self):
-        if self.action in ('list', 'retrieve'):
-            return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated()]
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -46,6 +28,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
 
     def get_queryset(self):
         return self.get_post().comments.all()
@@ -53,25 +36,8 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, post=self.get_post())
 
-    def update(self, request, *args, **kwargs):
-        comment = self.get_object()
-        if comment.author != request.user:
-            return Response(status=HTTPStatus.FORBIDDEN)
-        return super().update(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        comment = self.get_object()
-        if comment.author != request.user:
-            return Response(status=HTTPStatus.FORBIDDEN)
-        return super().destroy(request, *args, **kwargs)
-
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))
-
-    def get_permissions(self):
-        if self.action in ('list', 'retrieve'):
-            return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated()]
 
 
 class FollowViewSet(mixins.CreateModelMixin,
