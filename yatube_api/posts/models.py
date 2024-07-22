@@ -56,7 +56,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Текст комментария')
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True, db_index=True)
-    
+
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
@@ -74,7 +74,7 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name='following',
         verbose_name='Подписка'
     )
-    
+
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
