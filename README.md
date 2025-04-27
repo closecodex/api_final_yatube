@@ -1,75 +1,58 @@
-# api_final
-### Проект «API для Yatube»
+# API_FINAL🌐
+### Project "API for Yatube"
 
-Проект представляет собой API для социальной сети, которая позволяет пользователям подписываться друг на друга.
+This project provides an API for a social network that allows users to follow each other.
 
-### Описание проекта:
+### Project Description:
 
-Приложение позволяет:
+The application allows users to:
 
-1. Делать публикации, удалять и редактировать их, получать данные о публикациях.
-2. Добавлять комментарии, получать один или несколько комментариев к публикации.
-3. Получать данные о сообществах.
-4. Подписываться на других пользователей, видеть своих подписчиков.
+1. Create, delete, and edit posts, as well as retrieve information about posts.
+2. Add comments, retrieve one or multiple comments for a post.
+3. Retrieve information about communities (groups).
+4. Follow other users and view their followers.
 
-### Как запустить проект:
-Клонировать репозиторий и перейти в него в командной строке:
+### How to Run the Project:
 
-```
-git clone https://github.com/yandex-praktikum/api_final_yatube.git
-```
+1. **Clone the repository:**
+    
+    ```bash
+    git clone git@github.com:closecodex/api_final_yatube.git
+    cd api_final_yatube
+    ```
 
-```
-cd api_final_yatube
-```
+2. **Create and activate a virtual environment:**
 
+    ```bash
+    python -m venv venv
+    source venv\Scripts\activate
+    ```
 
-Cоздать и активировать виртуальное окружение:
+3. **Upgrade pip and install dependencies:**
+   
+   ```bash
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
 
-```
-python3 -m venv env
-```
+4. **Apply migrations:**
 
-Если у вас Linux/macOS
+   ```bash
+   python manage.py migrate
+   ```
 
-```
-source env/bin/activate
-```
+5. **Run the application:**
 
-Если у вас windows
+   ```bash
+   python manage.py runserver
+   ```
 
-```
-source env/scripts/activate
-```
+### Example Requests:
 
-Установить зависимости из файла requirements.txt:
-
-```
-python3 -m pip install --upgrade pip
-```
-
-```
-pip install -r requirements.txt
-```
-
-Выполнить миграции:
-
-```
-python3 manage.py migrate
-```
-
-Запустить проект:
-
-```
-python3 manage.py runserver
-```
-
-### Примеры запросов:
-
-Создание подписки:
+Create a subscription:
 - URL: /api/v1/follow/
-- Метод: POST
+- Method: POST
 
-Получение списка подписок:
+Retrieve the list of subscriptions:
 - URL: /api/v1/follow/
-- Метод: GET
+- Method: GET
